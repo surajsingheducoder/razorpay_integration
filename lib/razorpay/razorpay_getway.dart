@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:razorpay_integration/razorpay/pay_through_add/pay_through_add.dart';
+
 class RazorPayPayment extends StatefulWidget {
   const RazorPayPayment({super.key});
 
@@ -36,7 +40,7 @@ class _RazorPayPaymentState extends State<RazorPayPayment> {
   void makePayment() async {
     var options = {
       'key':'rzp_test_eKeKIpe4Wt30sG',
-      'amount':20000, //Rs = 200
+      'amount': 20000, //Here amount*100 = Rs 200
       'name':'Suraj',
       'description':'Shoes',
       'prefill':{'contact':'9162509629','email':'surajsingh.edugaon@gmail.com'},
@@ -52,12 +56,20 @@ class _RazorPayPaymentState extends State<RazorPayPayment> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("RazorPay"),
+        actions: [
+          IconButton(onPressed: () {
+              Get.to(() => const PayThroughAdd());
+          }, icon: Icon(Icons.navigate_next))
+        ],
       ),
-      body: ListView(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+         const Text("buy through click on button"),
           Card(
             child: ListTile(
               leading: Image.network("https://w7.pngwing.com/pngs/323/773/png-transparent-sneakers-basketball-shoe-sportswear-nike-shoe-outdoor-shoe-running-sneakers-thumbnail.png"),
@@ -67,9 +79,10 @@ class _RazorPayPaymentState extends State<RazorPayPayment> {
                 makePayment();
               }, child: Text("Buy now")),
             ),
-          )
+          ),
         ],
       ),
     );
   }
+
 }
